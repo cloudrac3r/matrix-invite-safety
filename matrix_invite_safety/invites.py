@@ -43,7 +43,7 @@ class InviteSafety:
 			logger.info('   The target does not have an active DM with the sender')
 
 			invite_room_state = event.unsigned.get('invite_room_state')
-			room_name_event = get_event(invite_room_state, 'm.room.name')
+			room_name_event = get_event(invite_room_state, 'm.room.name', '')
 			is_direct_event = get_event(invite_room_state, 'm.room.member', target)
 			is_direct = bool(get_key(is_direct_event, ['content', 'is_direct']))
 			logger.info(f'   Debug: Invite room state: {invite_room_state}')
@@ -85,7 +85,7 @@ class InviteSafety:
 			logger.info(f'   Debug: Shared rooms state response: {state}')
 
 			for room_id, room in state['rooms'].items():
-				power_levels = get_event(room['required_state'], 'm.room.power_levels')
+				power_levels = get_event(room['required_state'], 'm.room.power_levels', '')
 				if power_levels is not None:
 					power_level = get_key(power_levels, ['content', 'users', sender])
 					if type(power_level) is int and power_level >= 50:
