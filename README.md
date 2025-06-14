@@ -42,6 +42,8 @@ Please open a pull request if you have any changes regarding the installation pr
 
 If you are an employee of New Vector Ltd, please contact me @cadence:cadence.moe before contributing.
 
+I used `mypy invites.py` to type check before each test.
+
 ## Resources
 
 May be useful as reference or examples.
