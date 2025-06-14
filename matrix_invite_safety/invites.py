@@ -44,14 +44,14 @@ class InviteSafety:
 
 			invite_room_state = event.unsigned.get('invite_room_state')
 			room_name_event = get_event(invite_room_state, 'm.room.name')
-			is_direct = bool(get_event(invite_room_state, 'm.room.member', target))
+			is_direct_event = get_event(invite_room_state, 'm.room.member', target)
+			is_direct = bool(get_key(is_direct_event, ['content', 'is_direct']))
+			logger.info(f'   Debug: Invite room state: {invite_room_state}')
 
 			# Allow DM invites
 			if room_name_event is None:
 				logger.info(f'✅ Is a new direct chat ({is_direct=}), this is acceptable')
 				return NOT_SPAM
-
-			logger.info(f'   Debug: Invite room state: {invite_room_state}')
 
 			# See if the users share any rooms.
 			shared_room_ids = await self.api.run_db_interaction('matrix-invite-safety: get shared rooms', _db_get_shared_room_ids, target, sender)
