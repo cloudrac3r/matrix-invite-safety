@@ -11,7 +11,6 @@ The following algorithm is used to determine whether the sender is known. Once t
 1. If both people are on the same homeserver, it's TRUSTED.
 1. If both people have an active DM already, it's TRUSTED.
 1. If the invite is to DM, it's TRUSTED.
-1. If both people have no rooms in common, it's NOT trusted.
 1. If the sender moderates a room that both people share, it's TRUSTED.
 1. Otherwise, it's NOT trusted, because the people have no pre-existing relationship in Matrix data.
 
@@ -20,8 +19,6 @@ The following algorithm is used to determine whether the sender is known. Once t
 You need this Synapse patch to use this module: https://github.com/element-hq/synapse/pull/18241
 
 Logs are stored in `/var/log/synapse/matrix-invite-safety.log`. If the folder doesn't exist, it will probably fail. You can change the log location by editing the code.
-
-You need to allow requests to localhost in the `ip_range_blacklist` in your homeserver.yaml.
 
 ## Installation
 
@@ -40,9 +37,12 @@ Here's how I did it:
 
 Please open a pull request if you have any changes regarding the installation process, algorithm, or anything else in this repo. I don't know anything about the Python ecosystem, so lots of things could probably be better here. Your help would be greatly appreciated!
 
-If you are an employee of New Vector Ltd, please contact me @cadence:cadence.moe before contributing.
+1. Make your code change
+1. Type check: I used `mypy invites.py`
+1. Install the new version: `sudo python3 -m pip install .`
+1. Restart Synapse and try it out.
 
-I used `mypy invites.py` to type check before each test.
+If you are an employee of New Vector Ltd, please contact me @cadence:cadence.moe before contributing.
 
 ## Resources
 
